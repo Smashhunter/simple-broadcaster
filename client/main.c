@@ -10,7 +10,11 @@
 
 #define MESSAGE_SIZE (BUF_SIZE / 2)
 
-int main() {
+int main(int argc, char* argv[]) {
+    if(argc < 2){
+        printf("Entrer ip address!\n");
+        return 1;
+    }
     int sockfd;
     struct sockaddr_in server_addr;
     char buffer[BUF_SIZE] = {0};
@@ -21,7 +25,7 @@ int main() {
     // 2. Настройка адреса сервера
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(DEFAULT_PORT);
-    inet_pton(AF_INET, "127.0.0.1", &server_addr.sin_addr);
+    inet_pton(AF_INET, argv[1], &server_addr.sin_addr);
     
     // 3. Подключение к серверу
     connect(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
